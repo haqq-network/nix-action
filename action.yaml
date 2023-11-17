@@ -9,7 +9,7 @@ inputs:
   extraPullNames:
     description: "comma-separated extra cachix caches"
     required: false
-  useMacicNixCache:
+  useMagicNixCache:
     description: "use DeterminateSystems's magic nix cache. If enabled, cachix is disabled"
     required: false
     default: false
