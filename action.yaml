@@ -4,11 +4,15 @@ description: 'Install nix and haqq caches'
 
 inputs:
   signingKey:
-    description: 'haqq cachix key'
+    description: "haqq cachix key"
     required: true
   extraPullNames:
-    description: 'comma-separated extra cachix caches'
+    description: "comma-separated extra cachix caches"
     required: false
+  useMacicNixCache:
+    description: "use DeterminateSystems's magic nix cache. If enabled, cachix is disabled"
+    required: false
+    default: false
 
 runs:
   using: 'composite'
@@ -16,8 +20,12 @@ runs:
     - name: Install nix
       uses: DeterminateSystems/nix-installer-action@main
     - name: Setup cachix
+      if: inputs.useMagicNixCache == false
       uses: cachix/cachix-action@v12
       with:
         name: haqq
         signingKey: ${{ inputs.signingKey }}
         extraPullNames: ${{ inputs.extraPullNames }}
+    - name: Setup magic nix cache
+      if: inputs.useMagicNixCache == true
+      uses: DeterminateSystems/magic-nix-cache-action@main
