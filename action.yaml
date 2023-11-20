@@ -35,5 +35,5 @@ runs:
       uses: DeterminateSystems/magic-nix-cache-action@main
     - name: Install devenv
       if: ${{ inputs.installDevenv == 'true' }}
-      run: nix profile install --extra-substituters https://nix-community.cachix.org tarball+https://install.devenv.sh/latest
+      run: nix profile install --accept-flake-config --extra-substituters https://nix-community.cachix.org tarball+https://install.devenv.sh/latest
       shell: bash
