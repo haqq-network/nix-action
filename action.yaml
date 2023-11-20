@@ -24,16 +24,16 @@ runs:
     - name: Install nix
       uses: DeterminateSystems/nix-installer-action@main
     - name: Setup cachix
-      if: inputs.useMagicNixCache == false
+      if: ${{ inputs.useMagicNixCache != 'true' }}
       uses: cachix/cachix-action@v12
       with:
         name: haqq
         signingKey: ${{ inputs.signingKey }}
         extraPullNames: ${{ inputs.extraPullNames }}
     - name: Setup magic nix cache
-      if: inputs.useMagicNixCache == true
+      if: ${{ inputs.useMagicNixCache == 'true' }}
       uses: DeterminateSystems/magic-nix-cache-action@main
     - name: Install devenv
-      if: inputs.installDevenv == true
+      if: ${{ inputs.installDevenv == 'true' }}
       run: nix profile install tarball+https://install.devenv.sh/latest
       shell: bash
