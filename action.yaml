@@ -13,6 +13,10 @@ inputs:
     description: "use DeterminateSystems's magic nix cache. If enabled, cachix is disabled"
     required: false
     default: false
+  installDevenv:
+    description: "install devenv profile"
+    required: false
+    default: false
 
 runs:
   using: 'composite'
@@ -29,3 +33,6 @@ runs:
     - name: Setup magic nix cache
       if: inputs.useMagicNixCache == true
       uses: DeterminateSystems/magic-nix-cache-action@main
+    - name: Install devenv
+      if: inputs.installDevenv == true
+      run: nix profile install tarball+https://install.devenv.sh/latest
