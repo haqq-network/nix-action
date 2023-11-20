@@ -36,3 +36,4 @@ runs:
     - name: Install devenv
       if: inputs.installDevenv == true
       run: nix profile install tarball+https://install.devenv.sh/latest
+      shell: bash
