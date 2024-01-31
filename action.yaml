@@ -25,7 +25,7 @@ runs:
       uses: DeterminateSystems/nix-installer-action@main
     - name: Setup cachix
       if: ${{ inputs.useMagicNixCache != 'true' }}
-      uses: cachix/cachix-action@v12
+      uses: cachix/cachix-action@v14
       with:
         name: haqq
         signingKey: ${{ inputs.signingKey }}
