@@ -13,6 +13,10 @@ inputs:
     description: "use DeterminateSystems's magic nix cache. If enabled, cachix is disabled"
     required: false
     default: false
+  useCacheNixAction:
+    description: "use nix-community/cache-nix-action"
+    required: false
+    default: true
   installDevenv:
     description: "install devenv profile"
     required: false
@@ -21,8 +25,25 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Install nix
-      uses: DeterminateSystems/nix-installer-action@main
+    - uses: nixbuild/nix-quick-install-action@v26
+    - name: Setup cache-nix-action
+      if: ${{ inputs.useCacheNixAction == 'true' }}
+      uses: nix-community/cache-nix-action@v5
+      with:
+        primary-key: nix-${{ runner.os }}-${{ hashFiles('**/*.nix') }}
+        # restore a cache by this prefix
+        restore-prefixes-first-match: nix-${{ runner.os }}-
+        # collect garbage until Nix store size (in bytes) is at most this number
+        # before trying to save a new cache
+        gc-max-store-size-linux: 1073741824
+        # do purge caches
+        purge: true
+        # purge all versions of the cache
+        purge-prefixes: cache-${{ matrix.os }}-
+        # created more than this number of seconds ago relative to the start of the `Post Restore` phase
+        purge-created: 0
+        # except the version with the `primary-key`, if it exists
+        purge-primary-key: never
     - name: Setup cachix
       if: ${{ inputs.useMagicNixCache != 'true' }}
       uses: cachix/cachix-action@v14
