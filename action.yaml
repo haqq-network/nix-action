@@ -17,6 +17,10 @@ inputs:
     description: "use nix-community/cache-nix-action"
     required: false
     default: false
+  useCachix:
+    description: "Use cachix with haqq.cachix.org"
+    required: false
+    default: true
   cacheKeyPostfix:
     description: "cache-nix-action primary-key postfix"
     required: false
@@ -52,7 +56,7 @@ runs:
         # except the version with the `primary-key`, if it exists
         purge-primary-key: never
     - name: Setup cachix
-      if: ${{ inputs.useMagicNixCache != 'true' }}
+      if: ${{ inputs.useCachix == 'true' }}
       uses: cachix/cachix-action@v14
       with:
         name: haqq
