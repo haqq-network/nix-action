@@ -17,6 +17,10 @@ inputs:
     description: "use nix-community/cache-nix-action"
     required: false
     default: true
+  cacheKeyPostfix:
+    description: "cache-nix-action primary-key postfix"
+    required: false
+    default: ''
   installDevenv:
     description: "install devenv profile"
     required: false
@@ -30,7 +34,7 @@ runs:
       if: ${{ inputs.useCacheNixAction == 'true' }}
       uses: nix-community/cache-nix-action@v5
       with:
-        primary-key: nix-${{ runner.os }}
+        primary-key: nix-${{ runner.os }}-${{ cacheKeyPostfix }}
         # restore a cache by this prefix
         restore-prefixes-first-match: nix-${{ runner.os }}-
         # collect garbage until Nix store size (in bytes) is at most this number
