@@ -61,7 +61,8 @@ runs:
     - name: Setup magic nix cache
       if: ${{ inputs.useMagicNixCache == 'true' }}
       uses: DeterminateSystems/magic-nix-cache-action@v3
-      upstream-cache: https://haqq.cachix.org
+      with:
+        upstream-cache: https://haqq.cachix.org
     - name: Install devenv
       if: ${{ inputs.installDevenv == 'true' }}
       run: nix profile install --accept-flake-config --extra-substituters https://nix-community.cachix.org tarball+https://install.devenv.sh/latest
