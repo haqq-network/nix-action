@@ -12,11 +12,11 @@ inputs:
   useMagicNixCache:
     description: "use DeterminateSystems's magic nix cache. If enabled, cachix is disabled"
     required: false
-    default: false
+    default: true
   useCacheNixAction:
     description: "use nix-community/cache-nix-action"
     required: false
-    default: true
+    default: false
   cacheKeyPostfix:
     description: "cache-nix-action primary-key postfix"
     required: false
@@ -30,6 +30,9 @@ runs:
   using: 'composite'
   steps:
     - uses: nixbuild/nix-quick-install-action@v26
+      if: ${{ inputs.useCacheNixAction == 'true' }}
+    - uses: DeterminateSystems/nix-installer-action@v9
+      if: ${{ inputs.useCacheNixAction != 'true' }}
     - name: Setup cache-nix-action
       if: ${{ inputs.useCacheNixAction == 'true' }}
       uses: nix-community/cache-nix-action@v5
@@ -57,7 +60,8 @@ runs:
         extraPullNames: ${{ inputs.extraPullNames }}
     - name: Setup magic nix cache
       if: ${{ inputs.useMagicNixCache == 'true' }}
-      uses: DeterminateSystems/magic-nix-cache-action@main
+      uses: DeterminateSystems/magic-nix-cache-action@v3
+      upstream-cache: https://haqq.cachix.org
     - name: Install devenv
       if: ${{ inputs.installDevenv == 'true' }}
       run: nix profile install --accept-flake-config --extra-substituters https://nix-community.cachix.org tarball+https://install.devenv.sh/latest
