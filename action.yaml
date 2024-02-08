@@ -17,6 +17,9 @@ inputs:
     description: "use nix-community/cache-nix-action"
     required: false
     default: false
+  installNix:
+    required: false
+    default: true
   useCachix:
     description: "Use cachix with haqq.cachix.org"
     required: false
@@ -34,9 +37,9 @@ runs:
   using: 'composite'
   steps:
     - uses: nixbuild/nix-quick-install-action@v26
-      if: ${{ inputs.useCacheNixAction == 'true' }}
+      if: ${{ inputs.installNix == 'true' && inputs.useCacheNixAction == 'true' }}
     - uses: DeterminateSystems/nix-installer-action@v9
-      if: ${{ inputs.useCacheNixAction != 'true' }}
+      if: ${{ inputs.installNix == 'true' && inputs.useCacheNixAction != 'true' }}
     - name: Setup cache-nix-action
       if: ${{ inputs.useCacheNixAction == 'true' }}
       uses: nix-community/cache-nix-action@v5
