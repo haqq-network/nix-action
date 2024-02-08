@@ -12,7 +12,7 @@ inputs:
   useMagicNixCache:
     description: "use DeterminateSystems's magic nix cache. If enabled, cachix is disabled"
     required: false
-    default: true
+    default: false
   useCacheNixAction:
     description: "use nix-community/cache-nix-action"
     required: false
