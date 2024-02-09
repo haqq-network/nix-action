@@ -58,6 +58,11 @@ runs:
         purge-created: 0
         # except the version with the `primary-key`, if it exists
         purge-primary-key: never
+    - name: Setup magic nix cache
+      if: ${{ inputs.useMagicNixCache == 'true' }}
+      uses: DeterminateSystems/magic-nix-cache-action@v3
+      with:
+        upstream-cache: https://haqq.cachix.org
     - name: Setup cachix
       if: ${{ inputs.useCachix == 'true' }}
       uses: cachix/cachix-action@v14
@@ -65,11 +70,6 @@ runs:
         name: haqq
         signingKey: ${{ inputs.signingKey }}
         extraPullNames: ${{ inputs.extraPullNames }}
-    - name: Setup magic nix cache
-      if: ${{ inputs.useMagicNixCache == 'true' }}
-      uses: DeterminateSystems/magic-nix-cache-action@v3
-      with:
-        upstream-cache: https://haqq.cachix.org
     - name: Install devenv
       if: ${{ inputs.installDevenv == 'true' }}
       run: nix profile install --accept-flake-config --extra-substituters https://nix-community.cachix.org tarball+https://install.devenv.sh/latest
