@@ -70,7 +70,6 @@ runs:
         name: haqq
         signingKey: ${{ inputs.signingKey }}
         extraPullNames: ${{ inputs.extraPullNames }}
-        installCommand: nix profile install nixpkgs/nixos-23.11#cachix
     - name: Install devenv
       if: ${{ inputs.installDevenv == 'true' }}
       run: nix profile install --accept-flake-config --extra-substituters https://nix-community.cachix.org tarball+https://install.devenv.sh/latest
