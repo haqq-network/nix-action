@@ -60,7 +60,7 @@ runs:
         purge-primary-key: never
     - name: Setup magic nix cache
       if: ${{ inputs.useMagicNixCache == 'true' }}
-      uses: DeterminateSystems/magic-nix-cache-action@v3
+      uses: DeterminateSystems/magic-nix-cache-action@v4
       with:
         upstream-cache: https://haqq.cachix.org
     - name: Setup cachix
