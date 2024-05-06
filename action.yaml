@@ -36,7 +36,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: nixbuild/nix-quick-install-action@v26
+    - uses: nixbuild/nix-quick-install-action@v28
       if: ${{ inputs.installNix == 'true' && inputs.useCacheNixAction == 'true' }}
     - uses: DeterminateSystems/nix-installer-action@v9
       if: ${{ inputs.installNix == 'true' && inputs.useCacheNixAction != 'true' }}
