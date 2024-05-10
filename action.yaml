@@ -38,7 +38,7 @@ runs:
   steps:
     - uses: nixbuild/nix-quick-install-action@v28
       if: ${{ inputs.installNix == 'true' && inputs.useCacheNixAction == 'true' }}
-    - uses: DeterminateSystems/nix-installer-action@v9
+    - uses: DeterminateSystems/nix-installer-action@v10
       if: ${{ inputs.installNix == 'true' && inputs.useCacheNixAction != 'true' }}
     - name: Setup cache-nix-action
       if: ${{ inputs.useCacheNixAction == 'true' }}
