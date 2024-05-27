@@ -65,7 +65,7 @@ runs:
         upstream-cache: https://haqq.cachix.org
     - name: Setup cachix
       if: ${{ inputs.useCachix == 'true' }}
-      uses: cachix/cachix-action@v14
+      uses: cachix/cachix-action@v15
       with:
         name: haqq
         signingKey: ${{ inputs.signingKey }}
